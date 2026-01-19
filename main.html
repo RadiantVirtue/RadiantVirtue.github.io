@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Valentine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 60px 80px;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      color: #1a1a2e;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 14px 48px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+
+    .btn-no {
+      background: #f1f1f4;
+      color: #666;
+      position: relative;
+      transition: none;
+    }
+
+    .btn-no.escaped {
+      position: absolute;
+    }
+
+    .btn-no:hover {
+      background: #e8e8eb;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Will you be my Valentine?</h1>
+    <div class="buttons">
+      <button class="btn-yes" id="yesBtn">Yes</button>
+      <button class="btn-no" id="noBtn">No</button>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const escapeDistance = 150;
+
+    document.addEventListener('mousemove', (e) => {
+      const rect = noBtn.getBoundingClientRect();
+      const btnCenterX = rect.left + rect.width / 2;
+      const btnCenterY = rect.top + rect.height / 2;
+
+      const distX = e.clientX - btnCenterX;
+      const distY = e.clientY - btnCenterY;
+      const distance = Math.sqrt(distX * distX + distY * distY);
+
+      if (distance < escapeDistance) {
+        const angle = Math.atan2(distY, distX);
+        const moveDistance = 250 + Math.random() * 100;
+
+        let newX = rect.left - Math.cos(angle) * moveDistance;
+        let newY = rect.top - Math.sin(angle) * moveDistance;
+
+        // Check if cornered - if new position would be clamped, teleport to opposite side
+        const margin = 50;
+        const wouldBeClampedX = newX < margin || newX > window.innerWidth - rect.width - margin;
+        const wouldBeClampedY = newY < margin || newY > window.innerHeight - rect.height - margin;
+
+        if (wouldBeClampedX && wouldBeClampedY) {
+          // Teleport to opposite side of screen from cursor
+          newX = e.clientX < window.innerWidth / 2
+            ? window.innerWidth - rect.width - 100
+            : 100;
+          newY = e.clientY < window.innerHeight / 2
+            ? window.innerHeight - rect.height - 100
+            : 100;
+        } else {
+          // Keep button within viewport
+          newX = Math.max(10, Math.min(window.innerWidth - rect.width - 10, newX));
+          newY = Math.max(10, Math.min(window.innerHeight - rect.height - 10, newY));
+        }
+
+        noBtn.classList.add('escaped');
+        noBtn.style.left = newX + 'px';
+        noBtn.style.top = newY + 'px';
+      }
+    });
+
+    // Confetti
+    function createConfetti() {
+      const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe', '#43e97b', '#fa709a'];
+
+      for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = -10 + 'px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+
+    yesBtn.addEventListener('click', () => {
+      createConfetti();
+    });
+  </script>
+</body>
+</html>
