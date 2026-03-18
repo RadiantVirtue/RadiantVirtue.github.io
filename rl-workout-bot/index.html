@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>if(location.pathname.endsWith('/index.html'))history.replaceState(null,'',location.pathname.slice(0,-'index.html'.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RL Workout Bot - Rhian Kansara</title>
   <style>
@@ -476,9 +477,9 @@
 <body>
 
   <nav>
-    <a href="../index.html" class="nav-logo">RK</a>
+    <a href="/" class="nav-logo">RK</a>
     <ul class="nav-links">
-      <li><a href="../index.html">← back</a></li>
+      <li><a href="/">← back</a></li>
       <li><a href="#results">results</a></li>
       <li><a href="#implementation">implementation</a></li>
       <li><a href="https://github.com/RadiantVirtue/GymBot" target="_blank" rel="noopener">GitHub ↗</a></li>
