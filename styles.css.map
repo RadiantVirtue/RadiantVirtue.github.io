@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/styles.css"],
+  "sourcesContent": ["*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\r\n\r\nhtml, body {\r\n  height: 100%;\r\n  background: #1a1a1a;\r\n  color: #e8e8e8;\r\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;\r\n}\r\n\r\nhtml.league-snap {\r\n  scroll-snap-type: y mandatory;\r\n  scroll-behavior: smooth;\r\n}\r\n"],
+  "mappings": ";AAAA;AAAG,CAAC;AAAU,CAAC;AAAU,cAAY;AAAY,UAAQ;AAAG,WAAS;AAAG;AAExE;AAAM;AACJ,UAAQ;AACR,cAAY;AACZ,SAAO;AACP;AAAA,IAAa,aAAa;AAAA,IAAE,kBAAkB;AAAA,IAAE,UAAU;AAAA,IAAE;AAC9D;AAEA,IAAI,CAAC;AACH,oBAAkB,EAAE;AACpB,mBAAiB;AACnB;",
+  "names": []
+}
